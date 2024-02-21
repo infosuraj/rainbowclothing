@@ -1,18 +1,24 @@
-import React from 'react';
-import './cart-item.styles.scss'
-import Images from "../../assets";
+import React, {useContext} from 'react';
+import {CartItemContainer, ItemDetails, ImageContainer, ItemName, RemoveButton} from './cart-item.styles'
+import {CartContext} from "../../contexts/cart.context";
 
 const CartItem = ({ cartItem }) => {
     const { name, quantity, imageUrl, price } = cartItem
+    const {deleteItemFromCart} = useContext(CartContext)
+
+    const deleteItemHandler = () => deleteItemFromCart(cartItem)
 
     return (
-        <div className='cart-item-container'>
-            <img src={Images[imageUrl]} alt={`${name}`} />
-            <div className='item-details'>
-                <span className='name'>{name}</span>
+        <CartItemContainer>
+            <ImageContainer src={imageUrl} alt={`${name}`} />
+            <ItemDetails>
+                <ItemName>{name}</ItemName>
                 <span className='price'>{quantity} x ${price}</span>
-            </div>
-        </div>
+                <RemoveButton onClick={deleteItemHandler}>
+                    &#10005;
+                </RemoveButton>
+            </ItemDetails>
+        </CartItemContainer>
     );
 };
 

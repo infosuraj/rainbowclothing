@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {
-    createUserDocumentFromAuth,
+
     signInWithGooglePopup,
     signInAuthUserWithEmailAndPassword
 } from "../../utils/firebase/firebase.utils";
 import FormInput from "../form-input/form-input.component"
-import './sign-in-form.styles.scss'
-import Button from "../button/button.component";
+import {SignInContainer, Header2, ButtonsContainer, GoogleLogo} from './sign-in-form.styles'
+import Button , { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import images from "../../assets"
 
 const defaultFormFields = {
@@ -22,8 +22,7 @@ const SignInForm = () => {
     }
 
     const signInWithGoogle = async () => {
-        const {user} = await signInWithGooglePopup();
-
+        await signInWithGooglePopup();
     }
 
     const handleChange = (event) => {
@@ -34,7 +33,7 @@ const SignInForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const {user} = await signInAuthUserWithEmailAndPassword(email, password);
+            await signInAuthUserWithEmailAndPassword(email, password);
             resetFormFields();
         } catch (err) {
             if (err.code === "auth/invalid-credential") {
@@ -46,8 +45,8 @@ const SignInForm = () => {
     }
 
     return (
-        <div className='sign-up-container'>
-            <h2>Already have an account</h2>
+        <SignInContainer>
+            <Header2>Already have an account</Header2>
             <span>Sign in with Email and Password</span>
             <form onSubmit={handleSubmit}>
 
@@ -70,16 +69,18 @@ const SignInForm = () => {
                     autoComplete="new-password"
                     value={password}
                 />
-                <div className='buttons-container'>
+                <ButtonsContainer>
                     <Button type="submit">
                         Sign In
                     </Button>
-                    <Button type='button' buttonType='google' onClick={signInWithGoogle}>
-                        <images.Google className='google-logo'/>
+                    <Button type='button' buttonType={BUTTON_TYPE_CLASSES.google} onClick={signInWithGoogle}>
+                        <GoogleLogo>
+                            <images.Google/>
+                        </GoogleLogo>
                     </Button>
-                </div>
+                </ButtonsContainer>
             </form>
-        </div>
+        </SignInContainer>
     );
 };
 

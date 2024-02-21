@@ -1,7 +1,6 @@
-import './checkout-item.styles.scss'
+import {CheckoutItemContainer, ImageContainer, ImageComponent, NameContainer, QuantityContainer, ArrowContainer, PriceContainer, ValueContainer, RemoveButton} from './checkout-item.styles'
 
 import React,{useContext} from 'react';
-import Images from "../../assets";
 import {CartContext} from "../../contexts/cart.context";
 
 const CheckoutItem = ({cartItem}) => {
@@ -13,25 +12,25 @@ const CheckoutItem = ({cartItem}) => {
     const removeItemHandler = () => removeItemFromCart(cartItem)
 
     return (
-        <div className='checkout-item-container'>
-            <div className='image-container'>
-                <img src={Images[imageUrl]} alt={`${name}`}/>
-            </div>
-            <span className='name'>{name}</span>
-            <span className='quantity'>
-                <div className='arrow' onClick={removeItemHandler}>
+        <CheckoutItemContainer>
+            <ImageContainer>
+                <ImageComponent src={imageUrl} alt={`${name}`}/>
+            </ImageContainer>
+            <NameContainer>{name}</NameContainer>
+            <QuantityContainer>
+                <ArrowContainer onClick={removeItemHandler}>
                     &#10094;
-                </div>
-                <span className='value'>{quantity}</span>
-                <div className='arrow' onClick={addItemHandler}>
+                </ArrowContainer>
+                <ValueContainer>{quantity}</ValueContainer>
+                <ArrowContainer onClick={addItemHandler}>
                     &#10095;
-                </div>
-            </span>
-            <span className='price'>{price}</span>
-            <div className='remove-button' onClick={deleteItemHandler}>
+                </ArrowContainer>
+            </QuantityContainer>
+            <PriceContainer>{price}</PriceContainer>
+            <RemoveButton onClick={deleteItemHandler}>
                 &#10005;
-            </div>
-        </div>
+            </RemoveButton>
+        </CheckoutItemContainer>
     );
 };
 
